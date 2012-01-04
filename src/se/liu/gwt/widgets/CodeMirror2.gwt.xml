@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='codemirror2'>
+	<inherits name='com.google.gwt.user.User'/>
+	<script src='lib/codemirror.js'/>
+	<script src='mode/clike/clike.js'/>
+        <stylesheet src='theme/default.css'/>
+	<stylesheet src='lib/codemirror.css'/>
+	
+	<entry-point class='se.liu.gwt.widgets.client.CodeMirror2EntryPoint'/>
+</module>

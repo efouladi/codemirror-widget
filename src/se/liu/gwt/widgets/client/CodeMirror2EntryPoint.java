@@ -46,20 +46,30 @@ public class CodeMirror2EntryPoint implements EntryPoint {
         private CodeMirrorConf config = new CodeMirrorConf();
 	public TestWidget(){
 	    	    
-                
-                config.setValue("test");
-		config.setMode("text/x-java");
+                ModeDTO mode = new ModeDTO();
+		String[] k ={"class","System"};
+		String[] s = {"\"","\'"};
+		mode.setKeywords(k);
+		mode.setCommentSingle("//");
+		mode.setCommentMStart("/*");
+		mode.setCommentMEnd("*/");
+		mode.setEscapeCh('\\');
+		
+		mode.setStringCh(s);
+		mode.setIsOperatorChar("+");
+        
+                config.setValue("class");
+		config.setMode(mode);
 		config.setLineNumbers(true);
-                editor = new CodeMirror2(config);
+		editor = new CodeMirror2(config);
 		editor.setWidth("100%");
 		editor.setHeight("100%");
-                
+		
 		ScrollPanel sp = new ScrollPanel();
 		//sp.setHeight("100%");
                 //sp.setWidth("100%");
 		//sp.add(editor);
               	initWidget(editor);
 	}                
-
     }
 }

@@ -8,7 +8,7 @@ public class CodeMirrorConf {
      */
     private boolean lineNumbers;
     String value;
-    String mode;
+    ModeDTO mode;
    
     /**
      * Get the <code>LineNumbers</code> value.
@@ -33,11 +33,16 @@ public class CodeMirrorConf {
     public void setValue(String value){
 	this.value = value;
     }
-    public String getMode(){
+    public ModeDTO getMode(){
 	return mode;
     }
     public void setMode(String mode){
-	this.mode = mode;
+		ModeDTO dto = new ModeDTO();
+	dto.setName(mode);
+	    this.mode = dto;
+    }
+	public void setMode(ModeDTO mode){
+	    	this.mode = mode;
     }
 
 }

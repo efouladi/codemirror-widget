@@ -50,7 +50,7 @@ public class CodeMirror2 extends Widget implements HasValue<String>,HasValueChan
     private native JavaScriptObject initEditor(CodeMirrorConf conf)/*-{
 			 
 	var id = this.@se.liu.gwt.widgets.client.CodeMirror2::id;
-	var mode = conf.@se.liu.gwt.widgets.client.CodeMirrorConf::getMode()();
+	var mode = this.@se.liu.gwt.widgets.client.CodeMirror2::getParserConfig(Lse/liu/gwt/widgets/client/ModeDTO;)(conf.@se.liu.gwt.widgets.client.CodeMirrorConf::getMode()());
 	var value = conf.@se.liu.gwt.widgets.client.CodeMirrorConf::getValue()();
 	var lineNumber = conf.@se.liu.gwt.widgets.client.CodeMirrorConf::isLineNumbers()();
 
@@ -64,6 +64,30 @@ public class CodeMirror2 extends Widget implements HasValue<String>,HasValueChan
 	});
 	return codemirror;
 	}-*/;
+	private native JavaScriptObject getParserConfig(ModeDTO mode)/*-{
+	    var keywords = mode.@se.liu.gwt.widgets.client.ModeDTO::getKeywordsJSON()();
+	    var stringCh = mode.@se.liu.gwt.widgets.client.ModeDTO::getStringCh()();
+	    var isOperatorChar = mode.@se.liu.gwt.widgets.client.ModeDTO::getIsOperatorChar()();
+	    var commentSingle = mode.@se.liu.gwt.widgets.client.ModeDTO::getCommentSingle()();
+	    var commentMStart = mode.@se.liu.gwt.widgets.client.ModeDTO::getCommentMStart()();
+	    var commentMEnd = mode.@se.liu.gwt.widgets.client.ModeDTO::getCommentMEnd()();
+	    var escapeCh = mode.@se.liu.gwt.widgets.client.ModeDTO::getEscapeCh()();
+	    
+	 parserConfig = {
+				name : "basemode",
+				keywords : {"class": "true", "System":"true"},
+				stringCh : ["\"","\'"],
+				isOperatorChar : /[isOperatorChar]/,
+				commentSingle : commentSingle,
+				commentMStart : commentMStart,
+			    commentMEnd : commentMEnd,
+			    escapeCh : escapeCh
+				
+			};
+			//$wnd.alert(parserConfig.keywords);
+		return parserConfig;										   
+	}-*/;
+
     private native String getContent()/*-{
 	    var editor= this.@se.liu.gwt.widgets.client.CodeMirror2::editor;
 	    return editor.getValue();
@@ -79,9 +103,43 @@ public class CodeMirror2 extends Widget implements HasValue<String>,HasValueChan
 	    var editor= this.@se.liu.gwt.widgets.client.CodeMirror2::editor;
 	    return editor.refresh();
 	    }-*/;
-    private native void setMode()/*-{
-    	
-    	}-*/;
+    private native void mode(ModeDTO mode)/*-{
+		
+	    var editor= this.@se.liu.gwt.widgets.client.CodeMirror2::editor;
+	    var keywords = mode.@se.liu.gwt.widgets.client.ModeDTO::getKeywords()();
+	    var stringCh = mode.@se.liu.gwt.widgets.client.ModeDTO::getStringCh()();
+	    var isOperatorChar = mode.@se.liu.gwt.widgets.client.ModeDTO::getIsOperatorChar()();
+	    var commentSingle = mode.@se.liu.gwt.widgets.client.ModeDTO::getCommentSingle()();
+	    var commentMStart = mode.@se.liu.gwt.widgets.client.ModeDTO::getCommentMStart()();
+	    var commentMEnd = mode.@se.liu.gwt.widgets.client.ModeDTO::getCommentMEnd()();
+	    var escapeCh = mode.@se.liu.gwt.widgets.client.ModeDTO::getEscapeCh()();
+	    var keywordsJSON = "{";
+	    for (var i ;i<keywords.length ;i++ ){
+	    	if(i==keywords.length)
+			keywordsJSON = keywordsJSON + keywords[i] +": true";
+		else
+			
+			keywordsJSON = keywordsJSON + keywords[i] +": true,";
+
+	    
+	    }
+	    	keywordsJSON = keywordsJSON +"}"; 
+	 parserConfig = {
+				name : "basemode",
+				keywords : keywordsJSON,
+				stringCh : stringCh,
+				isOperatorChar : /[isOperatorChar]/,
+				commentSingle : commentSingle,
+				commentMStart : commentMStart,
+			    commentMEnd : commentMEnd,
+			    escapeCh : escapeCh
+				
+			};
+			//for (var p in parserConfig)
+				$wnd.alert("test");	
+			editor.setOption("mode",parserConfig);
+	
+	}-*/;
     public String getValue(){
 	return getContent();
     }
@@ -94,6 +152,9 @@ public class CodeMirror2 extends Widget implements HasValue<String>,HasValueChan
 	if (fireEvents) {
 	    ValueChangeEvent.fireIfNotEqual(this, oldValue, value);
 	}
+    }
+    public void setMode(ModeDTO mode){
+	this.mode(mode);	    
     }
     public HandlerRegistration addValueChangeHandler(ValueChangeHandler<String> handler) {
 	// Initialization code

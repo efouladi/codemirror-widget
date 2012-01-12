@@ -50,7 +50,7 @@ public class CodeMirror2 extends Widget implements HasValue<String>,HasValueChan
     private native JavaScriptObject initEditor(CodeMirrorConf conf)/*-{
 			 
 	var id = this.@se.liu.gwt.widgets.client.CodeMirror2::id;
-	var mode = this.@se.liu.gwt.widgets.client.CodeMirror2::getParserConfig(Lse/liu/gwt/widgets/client/ModeDTO;)(conf.@se.liu.gwt.widgets.client.CodeMirrorConf::getMode()());
+	var mode =conf.@se.liu.gwt.widgets.client.CodeMirrorConf::getModeObject()();
 	var value = conf.@se.liu.gwt.widgets.client.CodeMirrorConf::getValue()();
 	var lineNumber = conf.@se.liu.gwt.widgets.client.CodeMirrorConf::isLineNumbers()();
 

@@ -1,117 +1,116 @@
 package se.liu.gwt.widgets.client; 
 
-import com.google.gwt.json.client.JSONObject;
 
 public class ModeDTO {
 	String[] keywords;
 	String[] stringCh;
 	String isOperatorChar;
 	String name;
-String commentSingle;
-String commentMStart;
-String commentMEnd;
-char escapeCh;
-/**
- * Gets the keywords for this instance.
- *
- * @return The keywords.
- */
-public String[] getKeywords()
-{
-	return this.keywords;
-}
-/**
- * Gets the keywords for this instance.
- *
- * @param index The index to get.
- * @return The keywords.
- */
-public String getKeywords(int index)
-{
-	return this.keywords[index];
-}
-/**
- * Sets the keywords for this instance.
- *
- * @param keywords The keywords.
- */
-public void setKeywords(String[] keywords)
-{
-	this.keywords = keywords;
-}
-public String getKeywordsJSON(){
-	String keywordsJSON = "{";
-	    for (int i=0 ;i<keywords.length ;i++ ){
-	    	if(i==keywords.length-1)
-			keywordsJSON = keywordsJSON + "\"" + keywords[i] + "\"" +":\"true\"";
-		else
-			
-			keywordsJSON = keywordsJSON +"\""+ keywords[i]+ "\""+":\"true\",";
+	String commentSingle;
+	String commentMStart;
+	String commentMEnd;
+	char escapeCh;
+	/**
+	 * Gets the keywords for this instance.
+	 *
+	 * @return The keywords.
+	 */
+	public String[] getKeywords()
+	{
+		return this.keywords;
+	}
+	/**
+	 * Gets the keywords for this instance.
+	 *
+	 * @param index The index to get.
+	 * @return The keywords.
+	 */
+	public String getKeywords(int index)
+	{
+		return this.keywords[index];
+	}
+	/**
+	 * Sets the keywords for this instance.
+	 *
+	 * @param keywords The keywords.
+	 */
+	public void setKeywords(String[] keywords)
+	{
+		this.keywords = keywords;
+	}
+	public String getKeywordsJSON(){
+		String keywordsJSON = "{";
+		for (int i=0 ;i<keywords.length ;i++ ){
+			if(i==keywords.length-1)
+				keywordsJSON = keywordsJSON + "\"" + keywords[i] + "\"" +":\"true\"";
+			else
 
-	    
-	    }
-	    	keywordsJSON = keywordsJSON +"}"; 
-return keywordsJSON;		
+				keywordsJSON = keywordsJSON +"\""+ keywords[i]+ "\""+":\"true\",";
 
-}
-/**
- * Sets the keywords for this instance.
- *
- * @param index The index to set.
- * @param keywords The keywords.
- */
-public void setKeywords(int index, String keywords)
-{
-	this.keywords[index] = keywords;
-}
-/**
- * Gets the stringCh for this instance.
- *
- * @return The stringCh.
- */
-public String[] getStringCh()
-{
-	return this.stringCh;
-}
-/**
- * Gets the stringCh for this instance.
- *
- * @param index The index to get.
- * @return The stringCh.
- */
-public String getStringCh(int index)
-{
-	return this.stringCh[index];
-}
-/**
- * Sets the stringCh for this instance.
- *
- * @param stringCh The stringCh.
- */
-public void setStringCh(String[] stringCh)
-{
-	this.stringCh = stringCh;
-}
-/**
- * Sets the stringCh for this instance.
- *
- * @param index The index to set.
- * @param stringCh The stringCh.
- */
-public void setStringCh(int index, String stringCh)
-{
-	this.stringCh[index] = stringCh;
-}
-/**
- * Gets the isOperatorChar for this instance.
- *
- * @return The isOperatorChar.
- */
-public String getIsOperatorChar()
-{
-	return this.isOperatorChar;
-}
-/**
+
+		}
+		keywordsJSON = keywordsJSON +"}"; 
+		return keywordsJSON;		
+
+	}
+	/**
+	 * Sets the keywords for this instance.
+	 *
+	 * @param index The index to set.
+	 * @param keywords The keywords.
+	 */
+	public void setKeywords(int index, String keywords)
+	{
+		this.keywords[index] = keywords;
+	}
+	/**
+	 * Gets the stringCh for this instance.
+	 *
+	 * @return The stringCh.
+	 */
+	public String[] getStringCh()
+	{
+		return this.stringCh;
+	}
+	/**
+	 * Gets the stringCh for this instance.
+	 *
+	 * @param index The index to get.
+	 * @return The stringCh.
+	 */
+	public String getStringCh(int index)
+	{
+		return this.stringCh[index];
+	}
+	/**
+	 * Sets the stringCh for this instance.
+	 *
+	 * @param stringCh The stringCh.
+	 */
+	public void setStringCh(String[] stringCh)
+	{
+		this.stringCh = stringCh;
+	}
+	/**
+	 * Sets the stringCh for this instance.
+	 *
+	 * @param index The index to set.
+	 * @param stringCh The stringCh.
+	 */
+	public void setStringCh(int index, String stringCh)
+	{
+		this.stringCh[index] = stringCh;
+	}
+	/**
+	 * Gets the isOperatorChar for this instance.
+	 *
+	 * @return The isOperatorChar.
+	 */
+	public String getIsOperatorChar()
+	{
+		return this.isOperatorChar;
+	}
+	/**
 	 * Sets the isOperatorChar for this instance.
 	 *
 	 * @param isOperatorChar The isOperatorChar.
@@ -121,23 +120,23 @@ public String getIsOperatorChar()
 		this.isOperatorChar = isOperatorChar;
 	}
 	/**
- * Gets the name for this instance.
- *
- * @return The name.
- */
-public String getName()
-{
-	return this.name;
-}
+	 * Gets the name for this instance.
+	 *
+	 * @return The name.
+	 */
+	public String getName()
+	{
+		return this.name;
+	}
 	/**
- * Sets the name for this instance.
- *
- * @param name The name.
- */
-public void setName(String name)
-{
-	this.name = name;
-}
+	 * Sets the name for this instance.
+	 *
+	 * @param name The name.
+	 */
+	public void setName(String name)
+	{
+		this.name = name;
+	}
 	/**
 	 * Gets the commentSingle for this instance.
 	 *
@@ -210,5 +209,5 @@ public void setName(String name)
 	{
 		this.escapeCh = escapeCh;
 	}
-	
+
 }

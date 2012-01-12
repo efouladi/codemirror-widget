@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to='codemirror2'>
 	<inherits name='com.google.gwt.user.User'/>
+	<inherits name='com.google.gwt.json.JSON'/>
 	<script src='lib/codemirror.js'/>
 	<script src='mode/basemode.js'/>
         <stylesheet src='theme/default.css'/>

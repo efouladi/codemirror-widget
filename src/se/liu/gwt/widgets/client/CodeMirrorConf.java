@@ -1,5 +1,9 @@
 package se.liu.gwt.widgets.client;
 
+import com.google.gwt.core.client.JavaScriptObject;
+
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONString;
 
 public class CodeMirrorConf {
 
@@ -8,7 +12,7 @@ public class CodeMirrorConf {
      */
     private boolean lineNumbers;
     String value;
-    ModeDTO mode;
+    JSONObject mode;
    
     /**
      * Get the <code>LineNumbers</code> value.
@@ -33,16 +37,19 @@ public class CodeMirrorConf {
     public void setValue(String value){
 	this.value = value;
     }
-    public ModeDTO getMode(){
+    public JavaScriptObject getModeObject(){
+	return mode.getJavaScriptObject();
+    }
+    public JSONObject getMode(){
 	return mode;
     }
     public void setMode(String mode){
-		ModeDTO dto = new ModeDTO();
-	dto.setName(mode);
-	    this.mode = dto;
+	   JSONObject json = new JSONObject();
+	    json.put("name",new JSONString(mode));
+	    this.mode =json;
     }
-	public void setMode(ModeDTO mode){
-	    	this.mode = mode;
+    public void setMode(JSONObject mode){ 
+	    this.mode = mode;
     }
 
 }

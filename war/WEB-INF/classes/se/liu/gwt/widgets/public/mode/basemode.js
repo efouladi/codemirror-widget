@@ -1,7 +1,7 @@
 CodeMirror.defineMode("basemode", function(config,parserConfig) {
 	var keywords = parserConfig.keywords,
 	stringCh = parserConfig ,
-	isOperatorChar = parserConfig.isOperatorChar,
+	isOperatorChar =  new RegExp(parserConfig.isOperatorChar),
 	commentSingle = parserConfig.commentSingle,
 	commentMStart = parserConfig.commentMStart,
 	commentMEnd = parserConfig.commentMEnd,
@@ -27,7 +27,7 @@ CodeMirror.defineMode("basemode", function(config,parserConfig) {
 			stream.eatWhile(/[\w\.]/);
 			return "number";
 		}	
-		
+
 		if((ch == commentSingle.charAt(0)) && (stream.match(commentSingle.substring(1), true, false)) && state.tokenize!="comment"){
 			stream.skipToEnd();
 			return "comment";
@@ -43,7 +43,7 @@ CodeMirror.defineMode("basemode", function(config,parserConfig) {
 		}
 
 
-		
+
 		if (isOperatorChar.test(ch)) {
 			stream.eatWhile(isOperatorChar);
 			return "operator";
@@ -51,24 +51,22 @@ CodeMirror.defineMode("basemode", function(config,parserConfig) {
 
 		stream.eatWhile(/[\w\$_]/);
 		var cur = stream.current();
-		if (keywords.propertyIsEnumerable(cur)) {
+		if (containsObject(cur,keywords)) {
 			return "keyword";
 
 		}
 	}
-	function tokenCommentMultiple(stream,state){
+	function containsObject(obj, list) {
+		    var i;
+		    for (i = 0; i < list.length; i++) {
+			        if (list[i] === obj) {
+				            return true;
+				        }
+			    }
 
-		var cch;
-		while(cch = stream.next()){
-
-			if((cch == commentMEnd.charAt(0)) && (stream.match(commentMEnd.substring(1), true, false))){
-				alert("sfds");
-				state.tokenize = null;		
-				break;
-			}
-		}
-		return "comment";
+		    return false;
 	}
+
 	return {
 		startState : function(){
 			return {

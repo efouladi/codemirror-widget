@@ -1,6 +1,6 @@
 CodeMirror.defineMode("basemode", function(config,parserConfig) {
 	var keywords = parserConfig.keywords,
-	stringCh = parserConfig ,
+	stringCh = parserConfig.stringCh ,
 	isOperatorChar =  new RegExp(parserConfig.isOperatorChar),
 	commentSingle = parserConfig.commentSingle,
 	commentMStart = parserConfig.commentMStart,

@@ -1,6 +1,6 @@
 CodeMirror.defineMode("basemode", function(config,parserConfig) {
 	var keywords = parserConfig.keywords,
-	stringCh = parserConfig ,
+	stringCh = parserConfig.stringCh ,
 	isOperatorChar =  new RegExp(parserConfig.isOperatorChar),
 	commentSingle = parserConfig.commentSingle,
 	commentMStart = parserConfig.commentMStart,
@@ -67,19 +67,6 @@ CodeMirror.defineMode("basemode", function(config,parserConfig) {
 		    return false;
 	}
 
-	function tokenCommentMultiple(stream,state){
-
-		var cch;
-		while(cch = stream.next()){
-
-			if((cch == commentMEnd.charAt(0)) && (stream.match(commentMEnd.substring(1), true, false))){
-				alert("sfds");
-				state.tokenize = null;		
-				break;
-			}
-		}
-		return "comment";
-	}
 	return {
 		startState : function(){
 			return {

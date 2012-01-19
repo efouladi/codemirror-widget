@@ -19,20 +19,12 @@ import com.google.gwt.user.client.ui.Composite;
 
 public class CodeMirror2EntryPoint implements EntryPoint {
 
-
-	public void onModuleLoad() {
-		TestWidget test = new TestWidget();
-
-
-		RootLayoutPanel.get().add(test);
-
-	}
-	public class TestWidget extends Composite {
 		private CodeMirror2 editor;
 		private CodeMirrorConf config = new CodeMirrorConf();
-		public TestWidget(){
 
-			JSONObject mode = new JSONObject();
+	public void onModuleLoad() {
+
+	JSONObject mode = new JSONObject();
 			JSONArray keywords = new JSONArray();
 			JSONArray stringCh = new JSONArray();
 			keywords.set(0,new JSONString("class"));
@@ -55,7 +47,9 @@ public class CodeMirror2EntryPoint implements EntryPoint {
 			editor.setWidth("100%");
 			editor.setHeight("100%");
 
-			initWidget(editor);
-		}                
+
+		RootLayoutPanel.get().add(editor);
+		editor.setMode(mode);
+
 	}
 }

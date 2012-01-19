@@ -1,5 +1,7 @@
 package se.liu.gwt.widgets.client;
 
+import com.google.gwt.json.client.JSONObject;
+
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.core.client.JavaScriptObject;
@@ -14,7 +16,6 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.HasChangeHandlers;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.resources.client.CommonResources;
-
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -140,6 +141,13 @@ public class CodeMirror2 extends Widget implements HasValue<String>,HasValueChan
 			editor.setOption("mode",parserConfig);
 	
 	}-*/;
+    private native void setOption(String option,JavaScriptObject value)/*-{
+   		 
+	    var editor= this.@se.liu.gwt.widgets.client.CodeMirror2::editor;
+	    editor.setOption(option,value);
+    
+    
+    	}-*/;
     public String getValue(){
 	return getContent();
     }
@@ -153,8 +161,10 @@ public class CodeMirror2 extends Widget implements HasValue<String>,HasValueChan
 	    ValueChangeEvent.fireIfNotEqual(this, oldValue, value);
 	}
     }
-    public void setMode(ModeDTO mode){
-	this.mode(mode);	    
+    public void setMode(JSONObject mode){
+	this.setOption("mode",mode.getJavaScriptObject());	    
+	this.refresh();
+
     }
     public HandlerRegistration addValueChangeHandler(ValueChangeHandler<String> handler) {
 	// Initialization code

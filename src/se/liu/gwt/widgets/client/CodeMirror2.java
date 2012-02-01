@@ -2,7 +2,10 @@ package se.liu.gwt.widgets.client;
 
 import com.google.gwt.json.client.JSONObject;
 
+import com.google.gwt.user.client.DOM;
+
 import com.google.gwt.user.client.ui.HasValue;
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
@@ -16,25 +19,26 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.HasChangeHandlers;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.resources.client.CommonResources;
+import com.google.gwt.user.client.ui.RequiresResize;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class CodeMirror2 extends Widget implements HasValue<String>,HasValueChangeHandlers<String>, HasChangeHandlers{
+public class CodeMirror2 extends Widget implements HasValue<String>,HasValueChangeHandlers<String>, HasChangeHandlers, RequiresResize, IsWidget{
     private JavaScriptObject editor;
     private Element host;
     private static int nextId =0;
     private String id;
     private CodeMirrorConf config;
     private boolean valueChangeHandlerInitialized = false;
-    
+    //private boolean isResized = false;
     public CodeMirror2(CodeMirrorConf config){
-//	super();
+	super();
 
 	id = "codemirror-editor-"+(++nextId);
 	
-	host = Document.get().createDivElement();
-	host.setClassName(CommonResources.getInlineBlockStyle());
+	host = DOM.createDiv();
+//	host.setClassName(CommonResources.getInlineBlockStyle());
 	host.setId(id);
 	setElement(host);
 	//setStyleName("gwt-CodeMirror");
@@ -43,23 +47,25 @@ public class CodeMirror2 extends Widget implements HasValue<String>,HasValueChan
 
     }
     public void onLoad(){
-//	super.onLoad();
+	super.onLoad();
+	
 	editor = this.initEditor(config);	
+	setSize("100px","100px");
 	this.focus();	
-	this.refresh();
+	this.refreshNative();
+
     }
-    private native JavaScriptObject initEditor(CodeMirrorConf conf)/*-{
+   private native JavaScriptObject initEditor(CodeMirrorConf conf)/*-{
 			 
 	var id = this.@se.liu.gwt.widgets.client.CodeMirror2::id;
 	var mode =conf.@se.liu.gwt.widgets.client.CodeMirrorConf::getModeObject()();
 	var value = conf.@se.liu.gwt.widgets.client.CodeMirrorConf::getValue()();
 	var lineNumber = conf.@se.liu.gwt.widgets.client.CodeMirrorConf::isLineNumbers()();
 
-	
 
 
 	codemirror = new $wnd.CodeMirror($doc.getElementById(id), {
-	  value: value,
+	  value: value ,
 	  mode: mode,
 	  lineNumbers: lineNumber
 	});
@@ -94,15 +100,16 @@ public class CodeMirror2 extends Widget implements HasValue<String>,HasValueChan
 	    return editor.getValue();
 	    }-*/;
     private native void setContent(String content)/*-{
+	    var editor= this.@se.liu.gwt.widgets.client.CodeMirror2::editor;
 	    editor.setValue(content);
 	    }-*/;
     private native void focus()/*-{
 	    var editor= this.@se.liu.gwt.widgets.client.CodeMirror2::editor;
-	    return editor.focus();
+	    editor.focus();
 	    }-*/;
-    private native void refresh()/*-{
+    private native void refreshNative()/*-{
 	    var editor= this.@se.liu.gwt.widgets.client.CodeMirror2::editor;
-	    return editor.refresh();
+	    editor.refresh();
 	    }-*/;
     private native void mode(ModeDTO mode)/*-{
 		
@@ -151,6 +158,10 @@ public class CodeMirror2 extends Widget implements HasValue<String>,HasValueChan
     public String getValue(){
 	return getContent();
     }
+    public void refresh() {
+    
+    	refreshNative();
+    }
     public void setValue(String value){
 	setContent(value);
     }
@@ -181,6 +192,15 @@ public class CodeMirror2 extends Widget implements HasValue<String>,HasValueChan
     public HandlerRegistration addChangeHandler(ChangeHandler handler) {
                 return addDomHandler(handler, ChangeEvent.getType());
     }
+    public void onResize() {
+
+         int height = getParent().getOffsetHeight();
+         int width = getParent().getOffsetWidth();
+         setSize(width+"px",height+"px");
+     }
+    public Widget asWidget(){
+    	return this;
     
+    }
 }
 

@@ -1,11 +1,13 @@
 package se.liu.gwt.widgets.client;
 
-
 import com.google.gwt.core.client.EntryPoint;
 
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
+
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import se.liu.gwt.widgets.client.CodeMirrorConf;
 import se.liu.gwt.widgets.client.CodeMirror2;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
@@ -22,6 +24,7 @@ public class CodeMirror2EntryPoint implements EntryPoint {
 		private CodeMirror2 editor;
 		private CodeMirrorConf config = new CodeMirrorConf();
 
+		private ScrollPanel panel = new ScrollPanel();
 	public void onModuleLoad() {
 
 	JSONObject mode = new JSONObject();
@@ -40,16 +43,18 @@ public class CodeMirror2EntryPoint implements EntryPoint {
 			mode.put("escapeCh",new JSONString("\\"));
 			mode.put("isOperatorChar",new JSONString("\\+-"));
 
-			config.setValue("class");
+		//	config.setValue("class");
 			config.setMode(mode);
 			config.setLineNumbers(true);
 			editor = new CodeMirror2(config);
 			editor.setWidth("100%");
 			editor.setHeight("100%");
 
-
-		RootLayoutPanel.get().add(editor);
+		panel.add(editor);
+		RootLayoutPanel.get().add(panel);
 		editor.setMode(mode);
+//		editor.setValue("if");
+//		editor.refresh();
 
 	}
 }

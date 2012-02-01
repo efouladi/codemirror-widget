@@ -1,6 +1,6 @@
 package se.liu.gwt.widgets.client;
 
-import se.liu.gwt.widgets.shared.FieldVerifier;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -22,12 +22,12 @@ public class CodeMirror2Test extends GWTTestCase {
    * Tests the FieldVerifier.
    */
   public void testFieldVerifier() {
-    assertFalse(FieldVerifier.isValidName(null));
+ /*   assertFalse(FieldVerifier.isValidName(null));
     assertFalse(FieldVerifier.isValidName(""));
     assertFalse(FieldVerifier.isValidName("a"));
     assertFalse(FieldVerifier.isValidName("ab"));
     assertFalse(FieldVerifier.isValidName("abc"));
-    assertTrue(FieldVerifier.isValidName("abcd"));
+    assertTrue(FieldVerifier.isValidName("abcd"));*/
   }
 
   /**

@@ -7,5 +7,5 @@
         <stylesheet src='theme/default.css'/>
 	<stylesheet src='lib/codemirror.css'/>
 	
-	<!--entry-point class='se.liu.gwt.widgets.client.CodeMirror2EntryPoint'/-->
+	<!-- entry-point class='se.liu.gwt.widgets.client.CodeMirror2EntryPoint'/-->
 </module>

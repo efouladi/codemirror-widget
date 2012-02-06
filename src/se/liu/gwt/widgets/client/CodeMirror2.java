@@ -50,8 +50,8 @@ public class CodeMirror2 extends Widget implements HasValue<String>,HasValueChan
 	super.onLoad();
 	
 	editor = this.initEditor(config);	
-	setSize("100px","100px");
-	this.focus();	
+	//setSize("100px","100px");
+	this.focusNative();	
 	this.refreshNative();
 
     }
@@ -103,7 +103,7 @@ public class CodeMirror2 extends Widget implements HasValue<String>,HasValueChan
 	    var editor= this.@se.liu.gwt.widgets.client.CodeMirror2::editor;
 	    editor.setValue(content);
 	    }-*/;
-    private native void focus()/*-{
+    private native void focusNative()/*-{
 	    var editor= this.@se.liu.gwt.widgets.client.CodeMirror2::editor;
 	    editor.focus();
 	    }-*/;
@@ -155,6 +155,36 @@ public class CodeMirror2 extends Widget implements HasValue<String>,HasValueChan
     
     
     	}-*/;
+    private native void setMarkerNative(int line)/*-{
+    		var editor= this.@se.liu.gwt.widgets.client.CodeMirror2::editor;
+    		editor.setMarker(line,"\u25cf");
+    	}-*/;
+    private native void clearMarkerNative(int line)/*-{
+		var editor= this.@se.liu.gwt.widgets.client.CodeMirror2::editor;
+		editor.clearMarker(line);
+		}-*/;
+    private native void setCursorNative(int line, int ch)/*-{
+   		var editor= this.@se.liu.gwt.widgets.client.CodeMirror2::editor;
+   		editor.setCursor(line, ch);
+   		}-*/;
+    public void focus(){
+    	focusNative();
+    	
+    }
+    public void setCursor(Integer line,Integer ch){
+    	
+    	this.setCursorNative(line,ch);
+    	
+    }
+    
+    public void setMarker(Integer line){
+    	this.setMarkerNative(line);
+    	
+    }
+    public void clearMarker(Integer line){
+    	this.clearMarkerNative(line);
+    	
+    }
     public String getValue(){
 	return getContent();
     }

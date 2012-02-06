@@ -43,16 +43,20 @@ public class CodeMirror2EntryPoint implements EntryPoint {
 			mode.put("escapeCh",new JSONString("\\"));
 			mode.put("isOperatorChar",new JSONString("\\+-"));
 
-		//	config.setValue("class");
+			config.setValue("class");
 			config.setMode(mode);
 			config.setLineNumbers(true);
 			editor = new CodeMirror2(config);
 			editor.setWidth("100%");
 			editor.setHeight("100%");
-
-		panel.add(editor);
+			
+		
+			panel.add(editor);
+		
 		RootLayoutPanel.get().add(panel);
 		editor.setMode(mode);
+		editor.setMarker(0);
+		editor.setCursor(0, 3);
 //		editor.setValue("if");
 //		editor.refresh();
 

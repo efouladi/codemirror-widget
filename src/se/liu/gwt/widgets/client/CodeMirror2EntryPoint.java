@@ -1,20 +1,23 @@
 package se.liu.gwt.widgets.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 
-import com.google.gwt.user.client.ui.LayoutPanel;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ScrollPanel;
-import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 import se.liu.gwt.widgets.client.CodeMirrorConf;
 import se.liu.gwt.widgets.client.CodeMirror2;
+import se.liu.gwt.widgets.client.event.CursorActivityEvent;
+import se.liu.gwt.widgets.client.event.CursorActivityHandler;
+
 import com.google.gwt.user.client.ui.RootLayoutPanel;
-import com.google.gwt.user.client.ui.Composite;
 
 /**
  * This is the Test class for development of CodeMirror2 gwt widget
@@ -59,11 +62,32 @@ public class CodeMirror2EntryPoint implements EntryPoint {
 		
 		//	panel.setHeight("100%");
 		//	panel.setWidth("250px");
-			
-		RootLayoutPanel.get().add(panel);
+			Button lineInfo = new Button("show line info");
+			lineInfo.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					editor.markLine(0);
+					
+				}
+			});
+			VerticalPanel p = new VerticalPanel();
+			p.add(panel);
+			p.add(lineInfo);
+		RootLayoutPanel.get().add(p);
 		
 		editor.setMode(mode);
 		editor.setFocus(true);
+		editor.addCursorActivityHandler(new CursorActivityHandler() {
+			
+			@Override
+			public void onCursorActivity(CursorActivityEvent event) {
+				System.out.println("cursor");
+				editor.setLineClass(0, "bgMarkedLine");
+				
+			}
+		});
+		editor.setValue("test");
 		//RootLayoutPanel.get().forceLayout();
 		//editor.setSize("500px", "500px");
 		//editor.setMarker(0);

@@ -11,8 +11,10 @@ public class CodeMirrorConf {
      * Describe lineNumbers here.
      */
     private boolean lineNumbers;
-    String value;
-    JSONObject mode;
+    private String value;
+    private JSONObject mode;
+   
+	private JavaScriptObject onCursorActivity;
    
     /**
      * Get the <code>LineNumbers</code> value.
@@ -51,5 +53,13 @@ public class CodeMirrorConf {
     public void setMode(JSONObject mode){ 
 	    this.mode = mode;
     }
+    
+    public JavaScriptObject getOnCursorActivity() {
+		return onCursorActivity;
+	}
+
+	public void setOnCursorActivity(JavaScriptObject onCursorActivity) {
+		this.onCursorActivity = onCursorActivity;
+	}
 
 }

@@ -1,10 +1,13 @@
 package se.liu.gwt.widgets.client;
 
-import com.google.gwt.json.client.JSONObject;
+import se.liu.gwt.widgets.client.event.CursorActivityEvent;
+import se.liu.gwt.widgets.client.event.CursorActivityHandler;
+import se.liu.gwt.widgets.client.event.HasCursorActivityHandlers;
 
+import com.google.gwt.json.client.JSONNull;
+import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.user.client.DOM;
 
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -14,21 +17,20 @@ import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
 
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.HasChangeHandlers;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.resources.client.CommonResources;
 import com.google.gwt.user.client.ui.RequiresResize;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class CodeMirror2 extends FocusWidget implements HasValue<String>,HasValueChangeHandlers<String>, HasChangeHandlers, RequiresResize, IsWidget{
+public class CodeMirror2 extends FocusWidget 
+	implements HasValue<String>,HasValueChangeHandlers<String>
+	, HasChangeHandlers, RequiresResize, IsWidget, HasCursorActivityHandlers{
     private JavaScriptObject editor;
     private Element host;
     private static int nextId =0;
@@ -75,14 +77,22 @@ public class CodeMirror2 extends FocusWidget implements HasValue<String>,HasValu
 	var value = conf.@se.liu.gwt.widgets.client.CodeMirrorConf::getValue()();
 	var lineNumber = conf.@se.liu.gwt.widgets.client.CodeMirrorConf::isLineNumbers()();
 
-
-
+	//this variable is use later in onCursorActivity function to refere to
+	//the widget itself instead of browser window 
+	var thisCodeMirror= this;
+	
 	codemirror = new $wnd.CodeMirror($doc.getElementById(id), {
 	  value: value ,
 	  width: "100px",
       height: "100px",
 	  mode: mode,
-	  lineNumbers: lineNumber
+	  lineNumbers: lineNumber,
+	  onCursorActivity: function(){
+		var cevent = @se.liu.gwt.widgets.client.event.CursorActivityEvent::new()();
+		
+	  	thisCodeMirror.@se.liu.gwt.widgets.client.CodeMirror2::fireCursorEvent(Lse/liu/gwt/widgets/client/event/CursorActivityEvent;)(cevent);
+	  	
+	  }
 	});
 	return codemirror;
 	}-*/;
@@ -188,7 +198,59 @@ public class CodeMirror2 extends FocusWidget implements HasValue<String>,HasValu
 		editor.getScrollerElement().height = height;
 		editor.refresh();
 		}-*/;
+    
+    private native JavaScriptObject setLineClassNative(
+    		int line,String className)/*-{
+    		var editor= this.@se.liu.gwt.widgets.client.CodeMirror2::editor;
+    		return editor.setLineClass(line,className);
+    		
+    }-*/;
+    public JavaScriptObject setLineClass(int line, String className){
+    	return setLineClassNative(line, className);
+    	
+    }
+    private native JavaScriptObject lineInfo(JavaScriptObject line)/*-{
+    	var editor= this.@se.liu.gwt.widgets.client.CodeMirror2::editor;
+    	
+    	return editor.lineInfo(line);
+    
+    }-*/; 
+    private native JavaScriptObject lineInfo(int line)/*-{
+	var editor= this.@se.liu.gwt.widgets.client.CodeMirror2::editor;
+	
+	return editor.lineInfo(line);
 
+}-*/; 
+    /*
+     * Use to mark a certain line
+     * If the line is already marked, calling the function will clear the mark
+     */
+    public void markLine(int line){
+    	
+    	JSONObject lineInfo = getLineInfo(line);
+    	if(lineInfo!=null){
+    		
+	    	if(lineInfo.get("lineClass") instanceof JSONNull){
+	    		
+	    		setLineClass(line,"bgMarkedLine");
+	    		
+	    		
+	    		
+	    	}else{
+	    		setLineClass(line, null);
+	    		
+	    	}
+    	}
+    	
+    }
+    
+    public JSONObject getLineInfo(int line){
+    	
+    	return new JSONObject(lineInfo(line));
+    	
+    	
+    }
+    
     @Override
     public void setFocus(boolean focused){
     	super.setFocus(focused);
@@ -272,6 +334,15 @@ public class CodeMirror2 extends FocusWidget implements HasValue<String>,HasValu
     	return this;
     
     }
+	@Override
+	public HandlerRegistration addCursorActivityHandler(
+			CursorActivityHandler handler) {
+		return addHandler(handler, CursorActivityEvent.TYPE);
+	}
+	
+	private void fireCursorEvent(CursorActivityEvent event){
 
+		fireEvent(event);
+	}
 }
 

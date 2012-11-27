@@ -32,3 +32,13 @@ h1 {
 #closeButton {
   margin: 15px 6px 6px;
 }
+
+.markedLine{
+	color: white;
+	
+}
+
+.bgMarkedLine{
+	background: #e8f2ff !important;
+	
+}

@@ -25,6 +25,7 @@ CodeMirror.defineMode("basemode", function(config,parserConfig) {
 
 		if (/\d/.test(ch)) {
 			stream.eatWhile(/[\w\.]/);
+			
 			return "number";
 		}	
 
@@ -46,6 +47,7 @@ CodeMirror.defineMode("basemode", function(config,parserConfig) {
 
 		if (isOperatorChar.test(ch)) {
 			stream.eatWhile(isOperatorChar);
+			
 			return "operator";
 		}
 
@@ -57,14 +59,14 @@ CodeMirror.defineMode("basemode", function(config,parserConfig) {
 		}
 	}
 	function containsObject(obj, list) {
-		    var i;
-		    for (i = 0; i < list.length; i++) {
-			        if (list[i] === obj) {
-				            return true;
-				        }
-			    }
 
-		    return false;
+			var i;
+			for (i = 0; i < list.length; i++) {
+				if (list[i] === obj) {
+					return true;
+				}
+			}
+			return false;
 	}
 
 	return {
@@ -72,7 +74,6 @@ CodeMirror.defineMode("basemode", function(config,parserConfig) {
 			return {
 				tokenize : null
 			};
-
 		},
 		token : function(stream, state){
 			if(stream.eatSpace()) return null;
@@ -80,5 +81,4 @@ CodeMirror.defineMode("basemode", function(config,parserConfig) {
 			return (state.tokenize || style);
 		}
 	}
-
 });

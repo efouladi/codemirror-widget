@@ -1,15 +1,30 @@
 package se.liu.gwt.widgets.client;
 
+
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.ScrollEvent;
+import com.google.gwt.event.dom.client.ScrollHandler;
 
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.google.gwt.safehtml.shared.SafeHtmlUtils;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.InlineHTML;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.SimpleLayoutPanel;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 import se.liu.gwt.widgets.client.CodeMirrorConf;
@@ -31,6 +46,7 @@ public class CodeMirror2EntryPoint implements EntryPoint {
 		private CodeMirrorConf config = new CodeMirrorConf();
 
 		private ScrollPanel panel = new ScrollPanel();
+		
 	public void onModuleLoad() {
 
 	JSONObject mode = new JSONObject();
@@ -47,8 +63,8 @@ public class CodeMirror2EntryPoint implements EntryPoint {
 			mode.put("commentMStart",new JSONString("/*"));
 			mode.put("commentMEnd",new JSONString("*/"));
 			mode.put("escapeCh",new JSONString("\\"));
-			mode.put("isOperatorChar",new JSONString("\\+-"));
-
+			mode.put("isOperatorChar",new JSONString("\\+"));
+			
 			
 			config.setMode(mode);
 			config.setLineNumbers(true);
@@ -56,10 +72,37 @@ public class CodeMirror2EntryPoint implements EntryPoint {
 			editor = new CodeMirror2(config);
 			//editor.setWidth("100%");
 			//editor.setHeight("100%");
-			
+			editor.addCursorActivityHandler(new CursorActivityHandler() {
+				
+				@Override
+				public void onCursorActivity(CursorActivityEvent event) {
+					/*Cursor c = event.getCursorPos();
+					if(c!=null && c.getCh()!=null && c.getLine()!=null){
+						editor.scrollTo(c.getCh(), c.getLine()-10);
+						
+					}else 
+						System.out.println("noscroll");
+					*/
+
+					//System.out.println(editor.getCursorCoords(false).getX());
+					//System.out.println(editor.getCursorCoords(false).getY());
+					
+				}
+			});
 		
-			panel.add(editor);
-		
+		    
+			panel.setWidget(editor);
+			panel.setHeight("300px");
+			panel.setWidth("300px");
+			panel.setAlwaysShowScrollBars(true);
+			panel.addScrollHandler(new ScrollHandler() {
+				
+				@Override
+				public void onScroll(ScrollEvent event) {
+					//System.out.println(panel.getHorizontalScrollPosition());
+					//System.out.println(panel.getVerticalScrollPosition());
+				}
+			});
 		//	panel.setHeight("100%");
 		//	panel.setWidth("250px");
 			Button lineInfo = new Button("show line info");
@@ -67,33 +110,62 @@ public class CodeMirror2EntryPoint implements EntryPoint {
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					editor.markLine(0);
+					
 					
 				}
 			});
 			VerticalPanel p = new VerticalPanel();
 			p.add(panel);
 			p.add(lineInfo);
-		RootLayoutPanel.get().add(p);
+			
+			Anchor l = new Anchor("tesst");
+			
+			
+			HTML l1 = new HTML("asfasd<br />sfdds");
+			
+			l.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+				
+					editor.clearMarkedLine();		
+				}
+			});
+			p.add(l1);
+			p.add(l);
+			
+		/*	
+			VerticalPanel hp = new VerticalPanel();
+			
+			final FlowPanel fp = new FlowPanel();
+			fp.add(new InlineHTML("asfasdf"));
+			Button b = new Button("add");
+			b.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					fp.add(new HTML("khjklgjk"));
+					
+				}
+			});
+			
+			hp.add(fp);
+			hp.add(b);
+			*/
+			
+			
+			
+		RootLayoutPanel.get().add(editor);
+	
 		
 		editor.setMode(mode);
 		editor.setFocus(true);
-		editor.addCursorActivityHandler(new CursorActivityHandler() {
-			
-			@Override
-			public void onCursorActivity(CursorActivityEvent event) {
-				System.out.println("cursor");
-				editor.setLineClass(0, "bgMarkedLine");
-				
-			}
-		});
-		editor.setValue("test");
-		//RootLayoutPanel.get().forceLayout();
-		//editor.setSize("500px", "500px");
-		//editor.setMarker(0);
-		//editor.setCursor(0, 3);
-//		editor.setValue("\n");
-//		editor.refresh();
+		
+		editor.setValue("test\ntest2\ntest3");
+		
+		editor.setMarker(0);
+		editor.setCursor(0, 3);
+
 
 	}
 }

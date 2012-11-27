@@ -3,6 +3,10 @@ package se.liu.gwt.widgets.client;
 import java.io.Serializable;
 
 public class CursorCoords implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer x;
 	private Integer y;
 	private Integer yBot;

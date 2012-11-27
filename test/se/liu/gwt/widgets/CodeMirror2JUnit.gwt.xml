@@ -3,7 +3,6 @@
   <!-- Inherit our applications main module.                      -->
   <inherits name='se.liu.gwt.widgets.CodeMirror2'/>
 
-  <!-- Specify the path to any remote services.                   -->
-  <servlet path="/codemirror2/greet" class="se.liu.gwt.widgets.server.GreetingServiceImpl" />
+ 
 
 </module>

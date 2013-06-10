@@ -1,4 +1,4 @@
-/gwt-unitCache
-/www-test
-/.settings
+/gwt-unitCache*
+/www-test*
+/.settings*
 /codemirror2.jar
